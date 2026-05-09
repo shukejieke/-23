@@ -1,8 +1,3 @@
-.idea
-*.db
-*.exe
-.vscode
-*.bak
-dist
-dist1
-*.zip
+build/bin
+node_modules
+frontend/dist
