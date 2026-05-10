@@ -1,29 +1,32 @@
-package main
+package httpserver
 
 import (
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
 	"io"
 	"log"
-	"stzbHelper/http"
 	"sync"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+
+	httpRoute "stzbHelper/http"
 )
 
-func StartHttpService(wait *sync.WaitGroup) {
+// Start 启动 HTTP 服务（控制面）。
+// 说明：
+// - 当前统一监听 9527
+// - 路由注册仍复用原 http.RegisterRoute
+func Start(wait *sync.WaitGroup) {
 	log.Println("HTTP服务启动")
 	gin.DefaultWriter = io.Discard
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	http.RegisterRoute(r)
+	httpRoute.RegisterRoute(r)
 
 	log.Println("http://127.0.0.1:9527 浏览器打开此地址控制软件")
-	//log.Println("http://127.0.0.1:9527/data.html#/team 此地址查询队伍")
 
-	err := r.Run(":9527")
-
-	if err != nil {
+	if err := r.Run(":9527"); err != nil {
 		log.Fatal("http服务启动失败:" + err.Error())
 		wait.Done()
 		return
