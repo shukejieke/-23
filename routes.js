@@ -1,6 +1,8 @@
 import {createRouter,createWebHashHistory} from 'vue-router';
 import Index from './pages/Index.vue';
-import Team from './pages/Team.vue';
+import TeamUser from './pages/TeamUser.vue';
+import Task from './pages/Task.vue';
+import GroupWu from './pages/GroupWu.vue';
 
 const routes = [
     { 
@@ -9,8 +11,16 @@ const routes = [
         keepalive: true
     },
     { 
-        path: '/team', 
-        component: Team 
+        path: '/teamuser', 
+        component: TeamUser 
+    },
+    { 
+        path: '/task', 
+        component: Task 
+    },
+    {
+        path: '/groupWu',
+        component: GroupWu
     }
 ]
 

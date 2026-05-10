@@ -1,7 +1,7 @@
 {
   "name": "bikamoeapp",
   "private": true,
-  "version": "0.0.4-refactor.33",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -12,7 +12,7 @@ var ExVar = WebExVar{
 	0, false, false, false, false,
 }
 
-var IsDebug bool = false
+var IsDebug bool = true
 var Version string = "0.0.3-rc2-fix2"
 var OnlySrcIp = ""
 var OnlyDstIp = ""

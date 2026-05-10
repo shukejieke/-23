@@ -1,6 +1,6 @@
-package common
+package global
 
-import "github.com/gin-gonic/gin"
+import "encoding/json"
 
 type Response struct {
 	Code    int    `json:"code"`
@@ -9,16 +9,19 @@ type Response struct {
 }
 
 // Success 成功的返回
-func (r Response) Success(c *gin.Context) {
+func (r Response) Success() string {
 	r.Code = 200
 	if r.Message == "" {
 		r.Message = "ok"
 	}
-	c.JSON(200, r)
+
+	jsonData, _ := json.Marshal(r)
+
+	return string(jsonData)
 }
 
 // Error 发生错误的返回
-func (r Response) Error(c *gin.Context) {
+func (r Response) Error() string {
 	if r.Message == "" {
 		r.Message = "error"
 	}
@@ -27,5 +30,7 @@ func (r Response) Error(c *gin.Context) {
 		r.Code = 500
 	}
 
-	c.JSON(200, r)
+	jsonData, _ := json.Marshal(r)
+
+	return string(jsonData)
 }

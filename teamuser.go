@@ -1,25 +1,5 @@
 package model
 
-import "gorm.io/gorm/clause"
-
-// UpsertTeamUserFromCmd949 仅更新 cmd 949 能确定的字段（name/wu/group），
-// 避免把 cmd 103 写入的 power/contribute/pos 等字段清零。
-func UpsertTeamUserFromCmd949(id int, name, group string, wu, joinTime int) {
-	if Conn == nil {
-		return
-	}
-	_ = Conn.Clauses(clause.OnConflict{
-		Columns:   []clause.Column{{Name: "id"}},
-		DoUpdates: clause.AssignmentColumns([]string{"name", "wu", "group"}),
-	}).Create(&TeamUser{
-		Id:       id,
-		Name:     name,
-		Wu:       wu,
-		Group:    group,
-		JoinTime: joinTime,
-	}).Error
-}
-
 type TeamUser struct {
 	Id              int    `json:"id" gorm:"column:id"`
 	Name            string `json:"name" gorm:"column:name"`
@@ -56,40 +36,21 @@ func ToTeamUser(data []any) TeamUser {
 		return TeamUser{}
 	}
 
-	group := teamUserToString(data[13])
-	if group == "" {
-		group = "未分组"
+	if data[13].(string) == "" {
+		data[13] = "未分组"
 	}
 
 	teamUser := TeamUser{
-		Id:              teamUserToInt(data[0]),
-		Name:            teamUserToString(data[1]),
-		ContributeTotal: teamUserToInt(data[2]),
-		ContributeWeek:  teamUserToInt(data[7]),
-		Pos:             teamUserToInt(data[6]),
-		Power:           teamUserToInt(data[8]),
-		Wu:              teamUserToInt(data[10]),
-		Group:           group,
-		JoinTime:        teamUserToInt(data[30]),
+		Id:              int(data[0].(float64)),
+		Name:            data[1].(string),
+		ContributeTotal: int(data[2].(float64)),
+		ContributeWeek:  int(data[7].(float64)),
+		Pos:             int(data[6].(float64)),
+		Power:           int(data[8].(float64)),
+		Wu:              int(data[10].(float64)),
+		Group:           data[13].(string),
+		JoinTime:        int(data[30].(float64)),
 	}
 
 	return teamUser
-}
-
-func teamUserToInt(v any) int {
-	switch x := v.(type) {
-	case float64:
-		return int(x)
-	case int:
-		return x
-	case int64:
-		return int(x)
-	default:
-		return 0
-	}
-}
-
-func teamUserToString(v any) string {
-	s, _ := v.(string)
-	return s
 }

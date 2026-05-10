@@ -48,20 +48,8 @@ type BattleReport struct {
 	AttackHp              int64  `json:"attack_hp" gorm:"attack_hp"`                               // 进攻方总兵力
 	DefendHp              int64  `json:"defend_hp" gorm:"defend_hp"`                               // 防守方总兵力
 	Npc                   int64  `json:"npc" gorm:"npc"`                                           // 是否为与npc战斗
-	AllSkillInfo          string `json:"all_skill_info" gorm:"all_skill_info"`                     // 技能信息（原始）
+	AllSkillInfo          string `json:"all_skill_info" gorm:"all_skill_info"`                     // 技能信息
 	Result                int64  `json:"result" gorm:"result"`                                     // 战斗结果
-	// 解析后的可读字段
-	AttackHero1Name  string `json:"attack_hero1_name" gorm:"column:attack_hero1_name"`
-	AttackHero2Name  string `json:"attack_hero2_name" gorm:"column:attack_hero2_name"`
-	AttackHero3Name  string `json:"attack_hero3_name" gorm:"column:attack_hero3_name"`
-	DefendHero1Name  string `json:"defend_hero1_name" gorm:"column:defend_hero1_name"`
-	DefendHero2Name  string `json:"defend_hero2_name" gorm:"column:defend_hero2_name"`
-	DefendHero3Name  string `json:"defend_hero3_name" gorm:"column:defend_hero3_name"`
-	AttackerGearNames string `json:"attacker_gear_names" gorm:"column:attacker_gear_names"` // 进攻方宝物名（分号分隔）
-	DefenderGearNames string `json:"defender_gear_names" gorm:"column:defender_gear_names"` // 防守方宝物名（分号分隔）
-	AllSkillNames     string `json:"all_skill_names" gorm:"column:all_skill_names"`         // 技能名（每slot用分号隔开）
-	AttackHeroCombo   string `json:"attack_hero_combo" gorm:"column:attack_hero_combo"`     // 进攻方武将组合（ID升序+号拼接）
-	DefendHeroCombo   string `json:"defend_hero_combo" gorm:"column:defend_hero_combo"`     // 防守方武将组合（ID升序+号拼接）
 }
 
 // TableName 表名称
